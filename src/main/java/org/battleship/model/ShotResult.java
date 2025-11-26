@@ -1,4 +1,7 @@
 package org.battleship.model;
 
-public class ShotResult {
+public enum ShotResult {
+    MISS,
+    HIT,
+    KILL  // корабель повністю знищений
 }

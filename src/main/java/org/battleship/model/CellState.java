@@ -1,4 +1,8 @@
 package org.battleship.model;
 
-public class CellState {
+public enum CellState {
+    UNKNOWN,  // клітинка ще не стріляна
+    MISS,     // промах
+    HIT,      // влучили по кораблю
+    SUNK      // частина потопленого корабля
 }
