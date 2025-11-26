@@ -1,4 +1,6 @@
 package org.battleship.ai;
 
-public class AiMode {
+public enum AiMode {
+    HUNT,
+    TARGET
 }
