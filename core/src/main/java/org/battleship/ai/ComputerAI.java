@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 public class ComputerAI {
-
+    private Point lastShot;
     private final Board opponentBoard;    // дошка гравця
     private final Random random = new Random();
 
@@ -33,16 +33,26 @@ public class ComputerAI {
     //    ГОЛОВНИЙ МЕТОД AI
     public Point chooseShot() {
 
+        // TARGET MODE
         if (mode == AiMode.TARGET && !hitCluster.isEmpty()) {
             Point p = chooseTargetModeShot();
-            if (p != null)
+            if (p != null) {
+                lastShot = p;
                 return p;
+            }
 
-            // якщо не знайшли ціль — повертаємось у HUNT
+            // якщо ціль не знайдено → повертаємось у HUNT
             mode = AiMode.HUNT;
         }
 
-        return chooseHuntModeShot();
+        // HUNT MODE
+        Point shot = chooseHuntModeShot();
+        lastShot = shot;
+        return shot;
+    }
+
+    public Point getLastShot() {
+        return lastShot;
     }
 
     //   ОТРИМАННЯ РЕЗУЛЬТАТУ

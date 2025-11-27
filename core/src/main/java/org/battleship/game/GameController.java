@@ -5,36 +5,29 @@ import org.battleship.ai.*;
 
 public class GameController {
 
-    private final Board playerBoard;   // поле гравця
-    private final Board aiBoard;       // поле ШІ
-    private final ComputerAI ai;       // сам комп'ютер
+    private final Board playerBoard;
+    private final Board aiBoard;
+    private final ComputerAI ai;
 
-    private boolean playerTurn = true; // хто ходить зараз?
+    private boolean playerTurn = true;
 
     public GameController() {
         PlacementGenerator gen = new PlacementGenerator();
 
-        // Створюємо дошки
         playerBoard = new Board();
         aiBoard = new Board();
 
-        // Генеруємо розміщення кораблів
         gen.placeAllShips(playerBoard);
         gen.placeAllShips(aiBoard);
 
-        // Створюємо штучний інтелект
         ai = new ComputerAI(playerBoard);
     }
 
-    //     ГРАВЕЦЬ СТРІЛЯЄ
     public ShotResult playerShoots(Point p) {
-
-        if (!playerTurn)
-            return null; // не його хід
+        if (!playerTurn) return null;
 
         ShotResult result = aiBoard.shoot(p);
 
-        // Якщо промах — хід переходить до комп'ютера
         if (result == ShotResult.MISS) {
             playerTurn = false;
         }
@@ -42,35 +35,25 @@ public class GameController {
         return result;
     }
 
-    //     AI СТРІЛЯЄ
-    public ShotResult aiShoots() {
+    public ShotResult aiShootsOnce() {
+        if (playerTurn) return null;
 
-        if (playerTurn)
-            return null; // не його хід
-
-        // AI обирає клітинку
         Point target = ai.chooseShot();
-
-        // AI стріляє
         ShotResult result = playerBoard.shoot(target);
 
-        // AI повинен знати результат, щоб оновити стратегію
         ai.onShotResult(target, result);
-
-        // Якщо промах — хід переходить гравцю
-        if (result == ShotResult.MISS) {
-            playerTurn = true;
-        }
 
         return result;
     }
 
-    //     ХТО ЗАРАЗ ХОДИТЬ?
+    public void endAiTurn() {
+        playerTurn = true;
+    }
+
     public boolean isPlayerTurn() {
         return playerTurn;
     }
 
-    //       КІНЕЦЬ ГРИ?
     public boolean isGameOver() {
         return playerBoard.allShipsSunk() || aiBoard.allShipsSunk();
     }
@@ -79,12 +62,10 @@ public class GameController {
         return aiBoard.allShipsSunk();
     }
 
-    //      ГЕТЕРИ ДЛЯ UI/ТЕСТУ
-    public Board getPlayerBoard() {
-        return playerBoard;
+    public ComputerAI getAi() {
+        return ai;
     }
 
-    public Board getAiBoard() {
-        return aiBoard;
-    }
+    public Board getPlayerBoard() { return playerBoard; }
+    public Board getAiBoard() { return aiBoard; }
 }

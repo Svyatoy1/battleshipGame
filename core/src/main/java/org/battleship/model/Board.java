@@ -88,6 +88,10 @@ public class Board {
         ships.add(ship);
     }
 
+    public boolean hasShipAt(int x, int y) {
+        return findShipAt(x, y) != null;
+    }
+
     public boolean allShipsSunk() {
         for (Ship ship : ships) {
             if (!ship.isSunk()) {
