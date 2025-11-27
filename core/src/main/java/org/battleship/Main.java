@@ -1,11 +1,19 @@
 package org.battleship;
 
-import org.battleship.model.*;
-import org.battleship.game.GameController;
-
-import java.util.Scanner;
+import org.battleship.ui.GameWindow;
 
 public class Main {
+    public static void main(String[] args) {
+        new GameWindow();
+    }
+}
+
+//import org.battleship.model.*;
+//import org.battleship.game.GameController;
+
+// java.util.Scanner;
+
+/*public class Main {
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -151,4 +159,4 @@ public class Main {
     private static boolean validCoord(int x, int y) {
         return x >= 0 && x < 10 && y >= 0 && y < 10;
     }
-}
+}*/
