@@ -87,4 +87,13 @@ public class Board {
     public void addShip(Ship ship) {
         ships.add(ship);
     }
+
+    public boolean allShipsSunk() {
+        for (Ship ship : ships) {
+            if (!ship.isSunk()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
